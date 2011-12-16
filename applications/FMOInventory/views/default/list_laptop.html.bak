@@ -1,0 +1,26 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+<h1>This is the list_laptop.html template</h1>
+<script>
+jQuery(document).ready(function(){
+   jQuery('.smarttable').dataTable();
+});
+</script>
+<table class="smarttable">
+<thead>
+  <tr>
+    <th>Name</th><th>Role</th><th>Company</th><th>Action</th>
+  </tr>
+</thead>
+<tbody>
+{{for laptop in laptops:}}
+<tr>
+<td>{{=laptop.Serial}}</td>
+<td>{{=laptop.Student}}</td>
+<td>{{=cache.ram('c%s'%laptop.Serial, lambda:laptop.Serial,100)}}</td>
+<td>{{=button('edit','edit_laptops',laptop.id)}}</td>
+</tr>
+{{pass}}
+</tbody>
+</table>

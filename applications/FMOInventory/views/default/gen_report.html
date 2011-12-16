@@ -1,0 +1,69 @@
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />     
+    </head>
+	<link rel="stylesheet" type="text/css" media="all" href="/Inventarioxo2/static/css/web20.css" />
+
+    <body>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"> 
+	  <tr> 
+		
+		<td width="970" bgcolor="#FFFFF0" id="main-body"> 
+		<div id="header"><img src="/Inventarioxo2/static/images/header.jpg" width="970" height="182" border="0" /></div> 
+	
+	</table>
+		<center><h1>MARINA ORTH FOUNDATION</h1></center>
+		<center><h2>Educating for the Future</h2></center>
+		<center>Nit:xxxxxxxx xxxx</center>
+		<center>Dir: asdnn XXX xx555</center>
+        <h2>Laptops Report in {{=response.title or request.application}}</h2>
+		<A HREF="http://www.fpdf.org"><img src="/Inventarioxo2/static/images/header.jpg" width="104" height="71"></A>
+        <table border="0" align="center">
+            <tr>
+                <th><strong>ID</strong></th>
+                <th><strong>Serial</strong></th>
+                <th  align="center"><strong>Name</strong></th>
+                <th><strong>Grade</strong></th>
+                <th><strong>Time</strong></th>
+                <th><strong>Info</strong></th>
+                <th><strong>OS</strong></th>
+                <th><strong>Version</strong></th>
+            </tr>                
+            {{for p in laptops:}}
+                <tr>
+                    <td width="5%"><strong>{{=p.id}}</strong></td>
+                    <td width="15%" align="left">{{=p.Serial}}</td>
+                    <td width="20%" align="left">{{=p.User}}</td>
+                    <td align="center">{{=p.Grade}}</td>
+                    <td>{{=p.Time}}</td>
+					<td>{{=p.Info}}</td>
+					<td>{{=p.Os}}</td>
+					<td>{{=p.Version.name}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>  
+                
+<!--
+                    {{for m in laptops:}}
+                        <tr>
+
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            
+                            
+							
+                        </tr>
+                                             
+                    {{pass}}
+-->
+                    
+            {{pass}}
+            <tfoot>
+				<th><td><h5>Marina Orth Foundation</h5></td></th>
+			</tfoot>
+        </table>
+    </body>
+</html>

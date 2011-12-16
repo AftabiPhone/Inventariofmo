@@ -1,0 +1,58 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+
+<h1>Documents</h1>
+
+<script>
+jQuery(document).ready( function () {
+	jQuery('#example').dataTable( {
+		"bJQueryUI": true,
+		"sPaginationType": "full_numbers",
+		"bStateSave": true,
+		"sDom": 'T<"clear">lfrtip',
+		"oTableTools": {
+			"aButtons": [
+			"copy", "csv", "xls", "pdf",
+				{
+					"sExtends":    "collection",
+					"sButtonText": "Save",
+					"aButtons":    [ "csv", "xls", "pdf" ]
+				}
+				
+			]
+		}
+	} );
+} );
+</script>
+
+<script type="text/javascript" charset="utf-8" src="/Inventarioxo2/static/media/js/TableTools.js"></script>
+
+
+<tr>{{=button('add','add_docs')}}</tr>
+
+<table  cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+
+
+
+<thead>
+  <tr>
+    <th>Id</th><th>Name</th><th>Description</th><th>Date</th><th>Action</th>
+  </tr>
+</thead>
+<tbody>
+{{for doc in docs:}}
+<tr>
+<td>{{=doc.id}}</td>	
+<td>{{=doc.Name}}</td>
+<td>{{=doc.Info}}</td>
+<td>{{=doc.created_on}}</td>
+<td>{{=button('edit','edit_docs',doc.id)}}-<a href="{{=URL(r=request,f='download',args=doc.File)}}">Download</a></td>
+</tr>
+
+{{pass}}
+<tfoot>
+	<th>DOCS</th>
+</tfoot>
+</tbody>
+</table>

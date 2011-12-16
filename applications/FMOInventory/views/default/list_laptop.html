@@ -1,0 +1,69 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+
+
+<h1>Inventory: as Administrator</h1>
+<script>
+jQuery(document).ready( function () {
+	jQuery('#example').dataTable( {
+		"bJQueryUI": true,
+		"sPaginationType": "full_numbers",
+		"bStateSave": true,
+		"sDom": 'T<"clear">lfrtip',
+		"oTableTools": {
+			"aButtons": [
+			"copy", "csv", "xls", "pdf",
+				{
+					"sExtends":    "collection",
+					"sButtonText": "Save",
+					"aButtons":    [ "csv", "xls", "pdf" ]
+				}
+				
+			]
+		}
+	} );
+} );
+</script>
+
+<script type="text/javascript" charset="utf-8" src="/Inventarioxo2/static/media/js/TableTools.js"></script>
+
+
+<tr>{{=button('Add new','add_laptops')}}</tr>
+<table  cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+	<thead>
+  <tr>
+    <th>Id</th><th>Serial</th><th>In hands of</th><th>Grade</th><th>Information</th><th>Time</th><th>Version</th><th>Action</th>
+  </tr>
+</thead>
+<tbody>
+{{for laptop in laptops:}}
+<tr>
+<td>{{=laptop.id}}</td>	
+<td>{{=laptop.Serial}}</td>
+<td>{{=laptop.User}}</td>
+<td>{{=laptop.Grade}}</td>	
+<td>{{=laptop.Info}}</td>
+<td>{{=laptop.Time}}</td>
+
+
+<td>{{=laptop.Version.name}}</td>
+
+<td>{{=button('Edit','edit_laptop',laptop.id)}}-{{=button('View','view_laptops',laptop.id)}}</td>
+</tr>
+
+{{pass}}
+<tfoot>
+	<th>LAPTOPS</th>
+</tfoot>
+</tbody>
+</table>
+<p></p>
+<br>
+<br>
+
+[<a href="#fmo" onclick="jQuery('#form').slideToggle();">Reports</a>]
+<div id="form">
+<h3>Please use an argument to generate a specific report or leave them clean to generate a general report</h3>
+{{=form}}
+</div>

@@ -1,0 +1,3 @@
+{{extend 'layout.html'}}
+<h1>This is the default/view2_tools.html template</h1>
+{{=tools}}

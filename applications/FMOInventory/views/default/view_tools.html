@@ -1,0 +1,63 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+{{from gluon.contrib.markdown import WIKI}}
+
+<h1>Inventory: as Administrator</h1>
+<script>
+jQuery(document).ready( function () {
+	jQuery('#example').dataTable( {
+		"bJQueryUI": true,
+		"sPaginationType": "full_numbers",
+		"bStateSave": true,
+		"sDom": 'T<"clear">lfrtip',
+		"oTableTools": {
+			"aButtons": [
+			"copy", "csv", "xls", "pdf",
+				{
+					"sExtends":    "collection",
+					"sButtonText": "Save",
+					"aButtons":    [ "csv", "xls", "pdf" ]
+				}
+				
+			]
+		}
+	} );
+} );
+</script>
+
+<script type="text/javascript" charset="utf-8" src="/Inventarioxo2/static/media/js/TableTools.js"></script>
+
+
+<tr>{{=button('Add new','add_tools')}}</tr>
+
+<table  cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+
+	<thead>
+  <tr>
+    <th>Id</th><th>Name</th><th>Quantity</th><th>Location</th><th>Action</th>
+  </tr>
+</thead>
+<tbody>
+{{for laptop in tools:}}
+<tr>
+<td>{{=laptop.id}}</td>	
+<td>{{=laptop.Name}}</td>
+<td>{{=laptop.Quantity}}</td>
+	
+
+
+
+<td>{{=cache.ram('c%s'%laptop.Location, lambda:laptop.Location,100)}}</td>
+
+<td>{{=button('Edit','edit_tools',laptop.id)}}-{{=button('View','view2_tools',laptop.id)}}</td>
+</tr>
+
+{{pass}}
+<tfoot>
+	<th>LAPTOPS</th>
+</tfoot>
+</tbody>
+</table>
+
+

@@ -1,0 +1,5 @@
+{{extend 'layout.html'}}
+{{import gluon.contrib.markdown import WIKI}}
+<h1>Viewing {{=laptops.Serial}}</h1>
+{{=crud.read(db.laptops,laptops)}}
+{{=WIKI(db.laptops, laptops)}}

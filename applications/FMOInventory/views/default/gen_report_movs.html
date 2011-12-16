@@ -1,0 +1,66 @@
+<html>
+
+    <head>
+        <meta charset="utf-8" />     
+    </head>
+    <link rel="stylesheet" type="text/css" media="all" href="/Inventarioxo2/static/css/web20.css" />
+
+    <body>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0"> 
+      <tr> 
+        
+        <td width="970" bgcolor="#FFFFF0" id="main-body"> 
+        <div id="header"><img src="/Inventarioxo2/static/images/header.jpg" width="970" height="182" border="0" usemap="#Map" /></div> 
+    
+    </table>
+        <center><h1>MARINA ORTH FOUNDATION</h1></center>
+        <center><h3>Educating for the Future</h3></center>
+        <h2>Movements Report in {{=response.title or request.application}}</h2>
+
+        <table border="0">     
+			<tr>
+                <th><strong>ID</strong></th>
+                <th><strong>Serial</strong></th>
+                <th><strong>In hands of</strong></th>
+                <th><strong>Action</strong></th>
+                <th><strong>Info</strong></th>
+                <th><strong>Date</strong></th>
+                                <th><strong>Name</strong></th>
+                
+            </tr>                
+            {{for p in movements:}}
+                <tr>
+                    <td>{{=p.id}}</td>
+                    <td>{{=p.serial.Serial}}</td>
+                    <td>{{=p.name}}</td>
+                    <td>{{=p.action}}</td>
+                    <td>{{=p.created_on}}</td>
+                    <td>{{=p.info}}</td>
+					<td>{{=p.created_by.first_name}}-{{=p.created_by.last_name}}</td>
+					
+                    <td></td>
+                    <td></td>
+                </tr>  
+                
+<!--
+                    {{for m in movements:}}
+                        <tr>
+
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            
+                            
+                            
+                        </tr>
+                                             
+                    {{pass}}
+-->
+                    
+            {{pass}}
+            <tfoot>
+                <td><h5>Marina Orth Foundation</h5></td>
+            </tfoot>
+        </table>
+    </body>
+</html>

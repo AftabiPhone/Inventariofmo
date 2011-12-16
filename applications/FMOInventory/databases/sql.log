@@ -1,0 +1,373 @@
+timestamp: 2011-07-05T13:30:30.396910
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512)
+);
+success!
+timestamp: 2011-07-05T13:30:30.510991
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2011-07-05T13:30:30.581997
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2011-07-05T13:30:30.685740
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2011-07-05T13:30:30.750346
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2011-07-05T13:30:30.836885
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    url CHAR(512),
+    uuid CHAR(512)
+);
+success!
+timestamp: 2011-07-18T11:44:06.359173
+CREATE TABLE laptops(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Serial CHAR(512),
+    Student CHAR(512),
+    School CHAR(512),
+    Info CHAR(512),
+    file CHAR(512)
+);
+success!
+timestamp: 2011-07-19T22:56:15.639488
+ALTER TABLE laptops ADD created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE;
+timestamp: 2011-07-19T22:56:15.782021
+ALTER TABLE laptops ADD created_on TIMESTAMP;
+timestamp: 2011-07-19T23:20:49.312602
+CREATE TABLE person(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    company INTEGER REFERENCES laptops(id) ON DELETE CASCADE,
+    role CHAR(512),
+    address CHAR(512),
+    phone CHAR(512),
+    fax CHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2011-07-19T23:21:34.875331
+ALTER TABLE person ADD school INTEGER REFERENCES laptops(id) ON DELETE CASCADE;
+timestamp: 2011-07-20T14:47:42.714647
+ALTER TABLE laptops ADD picture_file BLOB;
+timestamp: 2011-07-28T15:04:55.608085
+ALTER TABLE laptops ADD version CHAR(512);
+timestamp: 2011-07-28T15:04:55.694211
+ALTER TABLE laptops ADD user CHAR(512);
+timestamp: 2011-07-28T15:04:55.772601
+ALTER TABLE laptops ADD time CHAR(512);
+timestamp: 2011-07-28T15:04:55.839232
+ALTER TABLE laptops ADD os CHAR(512);
+timestamp: 2011-07-28T15:04:55.928031
+CREATE TABLE parts(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Serial CHAR(512),
+    Location CHAR(512),
+    Quantity CHAR(512),
+    Foto CHAR(512),
+    picture_file BLOB,
+    Info TEXT,
+    Datein TIMESTAMP,
+    Dateout TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2011-07-28T15:04:56.047270
+CREATE TABLE tools(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name CHAR(512),
+    Quantity CHAR(512),
+    Location CHAR(512)
+);
+success!
+timestamp: 2011-07-28T15:04:56.159863
+CREATE TABLE docs(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name CHAR(512),
+    Info CHAR(512),
+    Location CHAR(512),
+    File CHAR(512)
+);
+success!
+timestamp: 2011-07-28T15:47:33.070191
+ALTER TABLE tools ADD created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE;
+timestamp: 2011-07-28T15:47:33.195489
+ALTER TABLE tools ADD created_on TIMESTAMP;
+timestamp: 2011-07-28T15:47:33.279617
+ALTER TABLE docs ADD created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE;
+timestamp: 2011-07-28T15:47:33.395494
+ALTER TABLE docs ADD created_on TIMESTAMP;
+timestamp: 2011-08-08T13:34:17.519704
+CREATE TABLE computer(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Serial CHAR(512),
+    Version CHAR(512),
+    Project CHAR(512)
+);
+success!
+timestamp: 2011-08-08T13:34:17.682187
+ALTER TABLE parts ADD image CHAR(512);
+timestamp: 2011-08-08T14:50:23.425275
+ALTER TABLE computer ADD created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE;
+timestamp: 2011-08-08T14:50:23.538986
+ALTER TABLE computer ADD created_on TIMESTAMP;
+timestamp: 2011-08-10T11:57:29.582199
+ALTER TABLE parts ADD name CHAR(512);
+timestamp: 2011-08-10T16:41:40.977262
+ALTER TABLE parts ADD price INTEGER;
+timestamp: 2011-08-11T10:29:38.428490
+CREATE TABLE sell_parts(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name CHAR(512),
+    Serial CHAR(512),
+    Location CHAR(512),
+    Quantity CHAR(512),
+    Image CHAR(512),
+    picture_file BLOB,
+    Info TEXT,
+    Price DOUBLE,
+    Datein TIMESTAMP,
+    Dateout TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2011-08-31T13:22:05.717526
+CREATE TABLE sold_parts(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name INTEGER REFERENCES parts(id) ON DELETE CASCADE,
+    Serial INTEGER REFERENCES parts(id) ON DELETE CASCADE,
+    Location CHAR(512),
+    Quantity CHAR(512),
+    Image CHAR(512),
+    picture_file BLOB,
+    Info TEXT,
+    Price DOUBLE,
+    Datein TIMESTAMP,
+    Dateout TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+DROP TABLE sell_parts;
+success!
+timestamp: 2011-08-31T13:26:07.441660
+CREATE TABLE sell_parts(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name INTEGER REFERENCES parts(id) ON DELETE CASCADE,
+    Serial INTEGER REFERENCES parts(id) ON DELETE CASCADE,
+    Location CHAR(512),
+    Quantity CHAR(512),
+    Image CHAR(512),
+    picture_file BLOB,
+    Info TEXT,
+    Price DOUBLE,
+    Datein TIMESTAMP,
+    Dateout TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2011-08-31T13:42:45.432068
+CREATE TABLE supplies(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512)
+);
+success!
+DROP TABLE parts;
+success!
+timestamp: 2011-08-31T13:47:52.917039
+CREATE TABLE parts(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name INTEGER REFERENCES supplies(id) ON DELETE CASCADE,
+    Serial CHAR(512),
+    Location CHAR(512),
+    Quantity CHAR(512),
+    Image CHAR(512),
+    picture_file BLOB,
+    Info TEXT,
+    Price DOUBLE,
+    Datein TIMESTAMP,
+    Dateout TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2011-09-02T08:47:55.329625
+ALTER TABLE supplies ADD created_on TIMESTAMP;
+timestamp: 2011-09-02T08:47:55.746017
+ALTER TABLE supplies ADD created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE;
+timestamp: 2011-09-02T08:48:10.302854
+CREATE TABLE version(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    version CHAR(512)
+);
+success!
+timestamp: 2011-09-02T08:49:47.291082
+ALTER TABLE version ADD created_on TIMESTAMP;
+timestamp: 2011-09-02T08:49:47.409261
+ALTER TABLE version ADD created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE;
+timestamp: 2011-09-02T09:47:41.508009
+CREATE TABLE item_version(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+DROP TABLE laptops;
+success!
+timestamp: 2011-09-02T10:30:39.362766
+CREATE TABLE laptops(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Serial CHAR(512),
+    User CHAR(512),
+    Time CHAR(512),
+    Info TEXT,
+    Os CHAR(512),
+    Version INTEGER REFERENCES item_version(id) ON DELETE CASCADE,
+    File CHAR(512),
+    picture_file BLOB,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+DROP TABLE laptops;
+success!
+timestamp: 2011-09-07T13:14:43.137138
+CREATE TABLE laptops(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Serial CHAR(512),
+    User CHAR(512),
+    Time CHAR(512),
+    Info TEXT,
+    Os CHAR(512),
+    Version INTEGER REFERENCES item_version(id) ON DELETE CASCADE,
+    File CHAR(512),
+    picture_file BLOB,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2011-09-07T13:19:23.781686
+ALTER TABLE laptops ADD grade CHAR(512);
+timestamp: 2011-09-11T21:37:31.933687
+CREATE TABLE pdf_template(
+    pdf_template_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512),
+    format CHAR(512)
+);
+success!
+timestamp: 2011-09-11T21:37:32.047386
+CREATE TABLE pdf_element(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pdf_template_id INTEGER REFERENCES pdf_template(pdf_template_id) ON DELETE CASCADE,
+    name CHAR(512),
+    type CHAR(2),
+    x1 DOUBLE,
+    y1 DOUBLE,
+    x2 DOUBLE,
+    y2 DOUBLE,
+    font CHAR(512),
+    size DOUBLE,
+    bold CHAR(1),
+    italic CHAR(1),
+    underline CHAR(1),
+    foreground INTEGER,
+    background INTEGER,
+    align CHAR(1),
+    text TEXT,
+    priority INTEGER
+);
+success!
+timestamp: 2011-10-11T21:30:23.166677
+CREATE TABLE movements(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    serial CHAR(512),
+    action CHAR(512),
+    name CHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2011-10-12T15:35:43.959049
+ALTER TABLE movements ADD info CHAR(512);
+DROP TABLE laptops;
+success!
+timestamp: 2011-10-31T11:37:48.197915
+CREATE TABLE laptops(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Serial CHAR(512),
+    User CHAR(512),
+    Grade CHAR(512),
+    Time CHAR(512),
+    Info TEXT,
+    Os CHAR(512),
+    Version INTEGER REFERENCES item_version(id) ON DELETE CASCADE,
+    File CHAR(512),
+    picture_file BLOB,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2011-12-14T09:26:07.881771
+ALTER TABLE auth_user ADD registration_id CHAR(512);
+timestamp: 2011-12-14T09:26:08.050310
+ALTER TABLE auth_cas ADD service CHAR(512);
+timestamp: 2011-12-14T09:26:08.133278
+ALTER TABLE auth_cas ADD renew CHAR(1);
+timestamp: 2011-12-14T09:26:08.199451
+ALTER TABLE auth_cas ADD ticket CHAR(512);
+timestamp: 2011-12-15T11:14:14.324570
+ALTER TABLE movements ADD file CHAR(512);
+timestamp: 2011-12-15T11:14:14.437227
+ALTER TABLE movements ADD picture_file BLOB;
+DROP TABLE tools;
+success!
+timestamp: 2011-12-15T11:27:17.149259
+CREATE TABLE tools(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name CHAR(512),
+    Quantity CHAR(512),
+    Location CHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2011-12-15T11:44:33.948018
+ALTER TABLE laptops ADD charger CHAR(512);
+timestamp: 2011-12-15T11:48:31.648384
+ALTER TABLE laptops ADD battery CHAR(512);

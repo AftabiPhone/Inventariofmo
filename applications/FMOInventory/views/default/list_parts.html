@@ -1,0 +1,58 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+
+<h1>Workshop:Parts</h1>
+
+<script>
+jQuery(document).ready( function () {
+	jQuery('.smarttable').dataTable( {
+		"bJQueryUI": true,
+		"sPaginationType": "full_numbers",
+		"bStateSave": true,
+		"sDom": 'T<"clear">lfrtip',
+		"oTableTools": {
+			"aButtons": [
+				{
+					"sExtends": "copy",
+					"sButtonText": "Copy to clipboard"
+				},
+				{
+					"sExtends": "csv",
+					"sButtonText": "Save to CSV"
+				},
+				{
+					"sExtends": "xls",
+					"sButtonText": "Save for Excel"
+				}
+			]
+		}
+	} );
+} );
+</script>
+{{=button('add','add_parts')}}
+
+<table class="smarttable">
+<thead>
+  <tr>
+    <th>Id</th><th>Name</th><th>Serial<th>Quantity</th><th>Description</th><th>Action</th>
+  </tr>
+</thead>
+<tbody>
+{{for part in parts:}}
+<tr>
+<td>{{=part.id}}</td>	
+<td>{{=part.Name}}</td>
+<td>{{=part.Serial}}</td>
+<td>{{=part.Quantity}}</td>
+
+<td>{{=cache.ram('c%s'%part.Info, lambda:part.Info,50)}}</td>
+<td>{{=button('edit','edit_parts',part.id)}}-{{=button('view','view_parts',part.id)}}-{{=button('Sell','sell_parts', part.id)}}</td>
+</tr>
+
+{{pass}}
+<tfoot>
+	<th>PARTS</th>
+</tfoot>
+</tbody>
+</table>

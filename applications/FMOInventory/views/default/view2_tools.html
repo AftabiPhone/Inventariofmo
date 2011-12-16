@@ -1,0 +1,4 @@
+{{extend 'layout.html'}}
+{{from gluon.contrib.markdown import WIKI}}
+<h1>Viewing {{=tools.Name}}</h1>
+{{=crud.read(db.tools, tools)}}
